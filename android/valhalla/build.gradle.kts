@@ -11,7 +11,9 @@ plugins {
 
 android {
     namespace = "com.valhalla.valhalla"
-    compileSdk = 36
+    // 35 (not the upstream 36) so consumers still on AGP 8.8.x / compileSdk 35 can consume the AAR
+    // without an AGP bump. The library uses no SDK-36 APIs (only reflection + Moshi), so this is safe.
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 26
