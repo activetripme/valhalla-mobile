@@ -7,18 +7,18 @@
   <!-- that they should prefer consuming it instead. -->
   <!-- do_not_remove: published-with-gradle-metadata -->
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.github.rallista</groupId>
+  <groupId>io.github.activetripme</groupId>
   <artifactId>valhalla-mobile</artifactId>
-  <version>0.6.1</version>
+  <version>0.6.2</version>
   <packaging>aar</packaging>
   <name>Valhalla Mobile</name>
   <description>A mobile app focused wrapper library for the valhalla routing engine</description>
-  <url>https://github.com/Rallista/valhalla-mobile</url>
+  <url>https://github.com/activetripme/valhalla-mobile</url>
   <inceptionYear>2024</inceptionYear>
   <licenses>
     <license>
       <name>MIT</name>
-      <url>https://github.com/Rallista/valhalla-mobile?tab=MIT-1-ov-file#MIT-1-ov-file</url>
+      <url>https://github.com/activetripme/valhalla-mobile?tab=MIT-1-ov-file#MIT-1-ov-file</url>
     </license>
   </licenses>
   <developers>
@@ -35,9 +35,9 @@
     </contributor>
   </contributors>
   <scm>
-    <connection>scm:git:https://github.com/Rallista/valhalla-mobile.git</connection>
-    <developerConnection>scm:git:ssh://github.com/Rallista/valhalla-mobile.git</developerConnection>
-    <url>https://github.com/Rallista/valhalla-mobile</url>
+    <connection>scm:git:https://github.com/activetripme/valhalla-mobile.git</connection>
+    <developerConnection>scm:git:ssh://github.com/activetripme/valhalla-mobile.git</developerConnection>
+    <url>https://github.com/activetripme/valhalla-mobile</url>
   </scm>
   <dependencies>
     <dependency>

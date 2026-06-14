@@ -1,9 +1,9 @@
 {
   "formatVersion": "1.1",
   "component": {
-    "group": "io.github.rallista",
+    "group": "io.github.activetripme",
     "module": "valhalla-mobile",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "attributes": {
       "org.gradle.status": "release"
     }
@@ -33,8 +33,8 @@
       ],
       "files": [
         {
-          "name": "valhalla-mobile-0.6.1.aar",
-          "url": "valhalla-mobile-0.6.1.aar",
+          "name": "valhalla-mobile-0.6.2.aar",
+          "url": "valhalla-mobile-0.6.2.aar",
           "size": 16304083,
           "sha512": "19094cf788613844aca9ca4b3144e1c7e98572dc821949526654bdf01ff50489079868111e190a40032212692207732557ab221be8643cfb8d034489c9410f30",
           "sha256": "c3b101dc820816829e30582c3b241c67f77ca557c46d1192686b4672dd6ca526",
@@ -104,8 +104,8 @@
       ],
       "files": [
         {
-          "name": "valhalla-mobile-0.6.1.aar",
-          "url": "valhalla-mobile-0.6.1.aar",
+          "name": "valhalla-mobile-0.6.2.aar",
+          "url": "valhalla-mobile-0.6.2.aar",
           "size": 16304083,
           "sha512": "19094cf788613844aca9ca4b3144e1c7e98572dc821949526654bdf01ff50489079868111e190a40032212692207732557ab221be8643cfb8d034489c9410f30",
           "sha256": "c3b101dc820816829e30582c3b241c67f77ca557c46d1192686b4672dd6ca526",
@@ -124,8 +124,8 @@
       },
       "files": [
         {
-          "name": "valhalla-mobile-0.6.1-sources.jar",
-          "url": "valhalla-mobile-0.6.1-sources.jar",
+          "name": "valhalla-mobile-0.6.2-sources.jar",
+          "url": "valhalla-mobile-0.6.2-sources.jar",
           "size": 7356,
           "sha512": "76e7cfe824b89ae2a5c672e4805ae817ec9dc2a8b1168b8b349c079cbb6e682f71990494b03aa2b62870e73ab9ea0cf3bfaae385d03bf8f51942319b49fde131",
           "sha256": "1ddd578b5c0fccb3773b45bdfb0aa0b17ec05e0246ace2b30d0e73b4d73b91b5",
@@ -144,13 +144,13 @@
       },
       "files": [
         {
-          "name": "valhalla-mobile-0.6.1-javadoc.jar",
-          "url": "valhalla-mobile-0.6.1-javadoc.jar",
-          "size": 332289,
-          "sha512": "003c9af27e0835653847da7a3e8cb56444605cf55767c342b39bd2cad18e392613201c189764640875bf529c27251332179a7fb43e14890f45c87e666dce4c8b",
-          "sha256": "7d622b109f8166a1b79c88edd73dad631801e7e136afaecdb867c3075f0bdaeb",
-          "sha1": "36e4b0915dc7893bf54682712894d8bba7763e17",
-          "md5": "6eb8fdd53488ba66302d46d4e8543f51"
+          "name": "valhalla-mobile-0.6.2-javadoc.jar",
+          "url": "valhalla-mobile-0.6.2-javadoc.jar",
+          "size": 332291,
+          "sha512": "4ee72c9045343ea30a3fe9056d21fa559782d482fb2cb79274311fb9f1688747de9e64ffeefc5cf0b644787ea3f4af6590f621ef7ea3b166e65a236dfca1f28e",
+          "sha256": "130a32a72bf93f6cc4c6ce73e8e9212af00d10cf1158447b46a992551983fa6f",
+          "sha1": "c2cebb23bbc04f01ad8a48a47b3296ab97c68149",
+          "md5": "4df71271590c5cba20d3113fe3c25ca3"
         }
       ]
     }
