@@ -243,8 +243,7 @@ jobs:
     needs: [combine-android, publish-release]
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      packages: write
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -283,13 +282,19 @@ jobs:
         run: chmod +x gradlew
         working-directory: android
 
-      # Publish to this fork's GitHub Packages registry. Maven Central is unavailable for a fork
-      # (io.github.rallista namespace + signing secrets are owned by upstream). GITHUB_TOKEN needs
-      # packages: write (declared above) and is authorized automatically for the workflow's repo.
-      - name: Publish to GitHub Packages
+      # Publish a full maven layout (aar + pom + module) into a local directory. Served anonymously
+      # via GitHub Pages at https://activetripme.github.io/valhalla-mobile/maven/ — any developer's
+      # build resolves without a PAT, unlike GitHub Packages. The pom/module carry transitive deps.
+      - name: Publish maven layout locally
         env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-        run: ./gradlew publishAllPublicationsToGitHubPackagesRepository
+        run: ./gradlew publishAllPublicationsToGitHubPagesRepository
         working-directory: android
+
+      - name: Deploy maven repo to GitHub Pages (gh-pages branch)
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: android/valhalla/build/maven-repo
+          target-folder: maven
+          clean: true

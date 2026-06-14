@@ -150,21 +150,16 @@ mavenPublishing {
     }
 }
 
-// Fork publishing target: Maven Central is unavailable (the io.github.rallista namespace and the
-// MAVEN_CENTRAL_* / MAVEN_GPG_* secrets are owned by upstream Rallista). GitHub Packages publishes
-// the same `io.github.rallista:valhalla-mobile` coordinates into this fork's package registry, so
-// consumers only add this repository + a read:packages PAT — no coordinate changes.
-// CI publishes via `publishAllPublicationsToGitHubPackagesRepository`; local builds skip it unless
-// GITHUB_ACTOR/GITHUB_TOKEN are set (credentials block simply fails closed without them).
+// Publish a full maven layout to a local directory; CI then deploys it to the gh-pages branch,
+// which GitHub Pages serves at https://activetripme.github.io/valhalla-mobile/maven/. Anonymous
+// for consumers — no PAT, unlike GitHub Packages — so any developer's build resolves out of the
+// box. The .pom/.module carry transitive deps (moshi, valhalla-models, osrm-api), so consumers
+// don't list them by hand. CI runs `publishAllPublicationsToGitHubPagesRepository`.
 publishing {
     repositories {
         maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/activetripme/valhalla-mobile")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR") ?: ""
-                password = System.getenv("GITHUB_TOKEN") ?: ""
-            }
+            name = "GitHubPages"
+            url = uri(layout.buildDirectory.dir("maven-repo"))
         }
     }
 }
