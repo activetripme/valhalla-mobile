@@ -186,7 +186,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.PAT }}
+          # The fork has no upstream PAT secret; GITHUB_TOKEN with permissions.contents: write is
+          # enough to push the version-bump commit and tag back to this repo.
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Configure Git
         run: |
@@ -205,6 +207,8 @@ jobs:
       - uses: softprops/action-gh-release@v1
         id: release
         with:
+          # Recent v1 minors require the token input explicitly; older ones auto-detected it from env.
+          token: ${{ secrets.GITHUB_TOKEN }}
           draft: true
           generate_release_notes: true
           tag_name: ${{ steps.version.outputs.version }}
@@ -240,7 +244,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: read
+      packages: write
 
     steps:
       - uses: actions/checkout@v4
@@ -279,12 +283,13 @@ jobs:
         run: chmod +x gradlew
         working-directory: android
 
-      - name: Publish to Maven Central
+      # Publish to this fork's GitHub Packages registry. Maven Central is unavailable for a fork
+      # (io.github.rallista namespace + signing secrets are owned by upstream). GITHUB_TOKEN needs
+      # packages: write (declared above) and is authorized automatically for the workflow's repo.
+      - name: Publish to GitHub Packages
         env:
-          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
-          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-        run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
+        run: ./gradlew publishAllPublicationsToGitHubPackagesRepository
         working-directory: android

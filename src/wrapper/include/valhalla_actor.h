@@ -35,8 +35,17 @@ private:
     std::unique_ptr<valhalla::baldr::GraphReader> graph_reader;
 public:
     ValhallaActor(const std::string& config_path, ValhallaMobileHttpClient* http_client = nullptr);
-    
+
     std::string route(const std::string& request);
+
+    // Map-match an encoded GPS trace onto the graph and return per-edge attributes
+    // (surface, length, speed, road class, etc.). Powers offline "surface type"
+    // analysis for recorded tracks.
+    std::string trace_attributes(const std::string& request);
+
+    // Compute a time/distance matrix between sources and targets. Powers offline
+    // multi-point routing and optimal-stop-ordering.
+    std::string matrix(const std::string& request);
 };
 
 #endif // VALHALLAACTOR_H

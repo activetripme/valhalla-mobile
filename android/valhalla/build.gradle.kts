@@ -105,7 +105,10 @@ tasks.named("preBuild") {
 
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-    signAllPublications()
+    // Signing disabled: the fork publishes to GitHub Packages (no signature requirement) and lacks
+    // the upstream MAVEN_GPG_* secrets. Re-enable signAllPublications() only if publishing to a
+    // repository that demands signed artifacts.
+    // signAllPublications()
 
     if (project.version.toString() === "unspecified") {
         throw IllegalArgumentException("Version must be specified")
@@ -143,6 +146,25 @@ mavenPublishing {
             connection.set("scm:git:https://github.com/Rallista/valhalla-mobile.git")
             developerConnection.set("scm:git:ssh://github.com/Rallista/valhalla-mobile.git")
             url.set("https://github.com/Rallista/valhalla-mobile")
+        }
+    }
+}
+
+// Fork publishing target: Maven Central is unavailable (the io.github.rallista namespace and the
+// MAVEN_CENTRAL_* / MAVEN_GPG_* secrets are owned by upstream Rallista). GitHub Packages publishes
+// the same `io.github.rallista:valhalla-mobile` coordinates into this fork's package registry, so
+// consumers only add this repository + a read:packages PAT — no coordinate changes.
+// CI publishes via `publishAllPublicationsToGitHubPackagesRepository`; local builds skip it unless
+// GITHUB_ACTOR/GITHUB_TOKEN are set (credentials block simply fails closed without them).
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/activetripme/valhalla-mobile")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR") ?: ""
+                password = System.getenv("GITHUB_TOKEN") ?: ""
+            }
         }
     }
 }

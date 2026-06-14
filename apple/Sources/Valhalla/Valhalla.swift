@@ -3,12 +3,16 @@ import ValhallaModels
 import ValhallaConfigModels
 
 public protocol ValhallaProviding {
-    
+
     init(_ config: ValhallaConfig) throws
-    
+
     init(configPath: String) throws
 
     func route(request: RouteRequest) throws -> RouteResponse
+
+    func traceAttributes(request: TraceAttributesRequest) throws -> TraceAttributesResponse
+
+    func matrix(request: MatrixRequest) throws -> MatrixResponse
 }
 
 public final class Valhalla: ValhallaProviding {
@@ -37,26 +41,53 @@ public final class Valhalla: ValhallaProviding {
             throw ValhallaError.valhallaError(-1, error.localizedDescription)
         }
     }
-    
+
     public func route(request: RouteRequest) throws -> RouteResponse {
-        let requestData = try JSONEncoder().encode(request)
-        guard let requestStr = String(data: requestData, encoding: .utf8) else {
-            throw ValhallaError.encodingNotUtf8("requestStr")
-        }
-        
-        let resultStr = route(rawRequest: requestStr)
-        guard let resultData = resultStr.data(using: .utf8) else {
-            throw ValhallaError.encodingNotUtf8("resultData")
-        }
-        
-        if let error = try? JSONDecoder().decode(ValhallaErrorModel.self, from: resultData) {
-            throw ValhallaError.valhallaError(error.code, error.message)
-        }
-        
-        return try JSONDecoder().decode(RouteResponse.self, from: resultData)
+        try perform(request: request) { actor!.route($0) }
+    }
+
+    public func traceAttributes(request: TraceAttributesRequest) throws -> TraceAttributesResponse {
+        try perform(request: request) { actor!.traceAttributes($0) }
+    }
+
+    public func matrix(request: MatrixRequest) throws -> MatrixResponse {
+        try perform(request: request) { actor!.matrix($0) }
     }
 
     public func route(rawRequest request: String) -> String {
         actor!.route(request)
+    }
+
+    public func traceAttributes(rawRequest request: String) -> String {
+        actor!.traceAttributes(request)
+    }
+
+    public func matrix(rawRequest request: String) -> String {
+        actor!.matrix(request)
+    }
+
+    // Encodes a typed request to JSON, hands the raw string to the actor, then decodes the
+    // response back into the typed model. Error responses are detected by attempting to
+    // decode them as ValhallaErrorModel — valid route/trace/matrix payloads never carry the
+    // required `code`+`message` pair, so the probe only matches actual errors.
+    private func perform<Request: Encodable, Response: Decodable>(
+        request: Request,
+        raw: (String) -> String
+    ) throws -> Response {
+        let requestData = try JSONEncoder().encode(request)
+        guard let requestStr = String(data: requestData, encoding: .utf8) else {
+            throw ValhallaError.encodingNotUtf8("requestStr")
+        }
+
+        let resultStr = raw(requestStr)
+        guard let resultData = resultStr.data(using: .utf8) else {
+            throw ValhallaError.encodingNotUtf8("resultData")
+        }
+
+        if let error = try? JSONDecoder().decode(ValhallaErrorModel.self, from: resultData) {
+            throw ValhallaError.valhallaError(error.code, error.message)
+        }
+
+        return try JSONDecoder().decode(Response.self, from: resultData)
     }
 }

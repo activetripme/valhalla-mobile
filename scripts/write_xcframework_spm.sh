@@ -2,7 +2,7 @@
 
 # Get the zip file of the xcframework from ci
 release_tag=$1
-release_url="https://github.com/Rallista/valhalla-mobile/releases/download/${release_tag}"
+release_url="https://github.com/activetripme/valhalla-mobile/releases/download/${release_tag}"
 xcframework_zip="valhalla-wrapper.xcframework.zip"
 
 # Get the checksum of the xcframework file.
