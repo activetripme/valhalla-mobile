@@ -114,19 +114,19 @@ mavenPublishing {
         throw IllegalArgumentException("Version must be specified")
     }
 
-    coordinates("io.github.rallista", "valhalla-mobile", project.version.toString())
+    coordinates("io.github.activetripme", "valhalla-mobile", project.version.toString())
 
     configure(AndroidSingleVariantLibrary(sourcesJar = true, publishJavadocJar = true))
 
     pom {
         name.set("Valhalla Mobile")
-        url.set("https://github.com/Rallista/valhalla-mobile")
+        url.set("https://github.com/activetripme/valhalla-mobile")
         description.set("A mobile app focused wrapper library for the valhalla routing engine")
         inceptionYear.set("2024")
         licenses {
             license {
                 name.set("MIT")
-                url.set("https://github.com/Rallista/valhalla-mobile?tab=MIT-1-ov-file#MIT-1-ov-file")
+                url.set("https://github.com/activetripme/valhalla-mobile?tab=MIT-1-ov-file#MIT-1-ov-file")
             }
         }
         developers {
@@ -143,9 +143,9 @@ mavenPublishing {
             }
         }
         scm {
-            connection.set("scm:git:https://github.com/Rallista/valhalla-mobile.git")
-            developerConnection.set("scm:git:ssh://github.com/Rallista/valhalla-mobile.git")
-            url.set("https://github.com/Rallista/valhalla-mobile")
+            connection.set("scm:git:https://github.com/activetripme/valhalla-mobile.git")
+            developerConnection.set("scm:git:ssh://github.com/activetripme/valhalla-mobile.git")
+            url.set("https://github.com/activetripme/valhalla-mobile")
         }
     }
 }
