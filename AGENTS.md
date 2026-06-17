@@ -84,7 +84,7 @@ The architecture has three layers:
 
 ### Swift (apple/)
 
-- **Minimum iOS version**: 16.4.
+- **Minimum iOS version**: 14.1.
 - **Distribution**: Swift Package Manager (SPM). The `Package.swift` at the repo root is the manifest.
 - Follow standard Swift conventions: protocols, `Codable` for JSON, structured error types.
 - The `ValhallaObjc` target provides the Objective-C++ bridge; `Valhalla` is the public-facing Swift target.
