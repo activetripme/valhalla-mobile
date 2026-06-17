@@ -8,4 +8,4 @@ set(VCPKG_CXX_FLAGS "-std=c++20 -stdlib=libc++")
 set(VCPKG_C_FLAGS "")
 
 # Set minimum iOS version to ensure C++20 standard library features
-set(VCPKG_OSX_DEPLOYMENT_TARGET "14.1")
+set(VCPKG_OSX_DEPLOYMENT_TARGET "16.4")
